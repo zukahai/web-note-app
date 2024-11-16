@@ -8,6 +8,10 @@
     transition: background-color 0.3s;
 }
 
+.nav-buttons {
+    margin-right: 30px;
+}
+
 .nav-buttons button:hover {
     background-color: #2E7D32;
 }
