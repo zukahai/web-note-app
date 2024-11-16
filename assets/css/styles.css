@@ -57,8 +57,16 @@ body {
 }
 
 .note-footer {
-    margin-top: 10px;
-    text-align: center;
+    margin-top: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.up-down {
+    width: 90%;
 }
 
 button, .note-header button {
@@ -146,7 +154,15 @@ button:hover {
 }
 
 .delete-icon {
-    margin: 0 100px
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+    color: #f98a69;
+    font-size: 20px;
+}
+
+.delete-icon:hover {
+    color: #ff1100;
 }
 
 

@@ -73,8 +73,10 @@ function loadNotesFromLocalStorage() {
                 </div>
                 <textarea class="content" id="content-${index + 1}" readonly>${note.content}</textarea>
                 <div class="note-footer">
-                    <i class="fas fa-arrow-up" onclick="moveUp('note-${index + 1}')"></i>
-                    <i class="fas fa-arrow-down" onclick="moveDown('note-${index + 1}')"></i>
+                    <div class = "up-down">
+                        <i class="fas fa-arrow-up" onclick="moveUp('note-${index + 1}')"></i>
+                        <i class="fas fa-arrow-down" onclick="moveDown('note-${index + 1}')"></i>
+                    </div>
                     <i class="fas fa-trash-alt delete-icon" onclick="deleteNote('note-${index + 1}')"></i>
                 </div>
             `;
