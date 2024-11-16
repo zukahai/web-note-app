@@ -15,3 +15,9 @@
 .nav-buttons button:hover {
     background-color: #2E7D32;
 }
+
+.home {
+    font-size: 20px;
+    /* bold */
+    font-weight: bold;
+}

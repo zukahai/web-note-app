@@ -38,6 +38,8 @@ body {
     font-weight: bold;
     color: #f1f1f1;
     width: 90%; /* Allow for larger title width */
+    font-size: 17px;
+    color: #a7e9fd;
 }
 
 .content {
