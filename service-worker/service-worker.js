@@ -4,9 +4,9 @@ const urlsToCache = [
     '/index.html',
     '/assets/css/style.css',
     '/assets/css/nav.css',
+    '/assets/ico/note.ico',
     '/src/js/script.js',
     '/src/js/app.js',
-    '/assets/ico/note.ico',
 ];
 
 // Lưu các tài nguyên vào cache khi Service Worker được cài đặt
