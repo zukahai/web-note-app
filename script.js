@@ -182,6 +182,7 @@ function addNewNote() {
 
     container.appendChild(newNote);
     saveNotesToLocalStorage();  // Lưu lại khi thêm ghi chú mới
+    loadNotesFromLocalStorage();  // Tải lại ghi chú từ localStorage
 }
 
 // Xoá ghi chú
