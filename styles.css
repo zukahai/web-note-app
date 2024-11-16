@@ -146,3 +146,107 @@ button:hover {
 }
 
 
+/* Định vị các button ở góc dưới trái */
+.file-btn, .file-input {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    z-index: 10;
+}
+
+.file-btn-upload {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    z-index: 10;
+}
+
+.file-btn:hover {
+    background-color: #0056b3;
+}
+
+.file-input {
+    position: fixed;
+    bottom: 20px;
+    left: 100px; /* Cách nút lưu file một khoảng */
+    display: none; /* Ẩn input file mặc định */
+}
+
+/* Thêm màu sắc cho biểu tượng */
+.file-btn i {
+    pointer-events: none; /* Ngăn chặn sự kiện chuột trên biểu tượng */
+}
+
+/* Thêm hiệu ứng hover */
+.file-btn:hover i {
+    color: #ffcc00;
+}
+
+/* Định vị các button ở góc dưới trái */
+.file-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 100px;
+    width: 60px;
+    height: 60px;
+    background-color: #a2af3c;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    z-index: 10;
+}
+
+.file-btn:hover {
+    background-color: #e33a80;
+}
+
+/* Ẩn input file, để khi nhấn nút Chọn File, nó sẽ mở hộp thoại chọn file */
+.file-input {
+    position: fixed;
+    bottom: 20px;
+    left: 100px; /* Cách nút lưu file một khoảng */
+    display: none; /* Ẩn input file mặc định */
+}
+
+/* Thêm màu sắc cho biểu tượng */
+.file-btn i {
+    pointer-events: none; /* Ngăn chặn sự kiện chuột trên biểu tượng */
+}
+
+/* Thêm hiệu ứng hover */
+.file-btn:hover i {
+    color: #ffcc00;
+}

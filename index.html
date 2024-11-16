@@ -17,13 +17,21 @@
     <button class="add-note-btn" onclick="addNewNote()">
         <i class="fas fa-plus"></i>
     </button>
+    <!-- Nút Chọn File -->
+    <input type="file" id="file-input" onchange="loadNotesFromFile(event)" class="file-input" />
+    <button onclick="document.getElementById('file-input').click()" class="file-btn">
+        <i class="fas fa-upload"></i>
+    </button>
+    <button onclick="saveNotesToFile()" class="file-btn-upload">
+        <i class="fas fa-save"></i>
+    </button>
     
     <div class="note-container-scrollable">
         <!-- Các ghi chú sẽ được thêm vào đây -->
     </div>
 
-    <input type="file" id="file-input" onchange="loadNotesFromFile(event)" />
-    <button onclick="saveNotesToFile()">Lưu Ghi Chú ra File</button>
+    <!-- <input type="file" id="file-input" onchange="loadNotesFromFile(event)" />
+    <button onclick="saveNotesToFile()">Lưu Ghi Chú ra File</button> -->
 
     <script src="script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
