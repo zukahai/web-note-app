@@ -21,15 +21,18 @@ function moveDown(noteId) {
 
 // Sao chép nội dung ghi chú
 function copyContent(contentId) {
+    const title = document.getElementById(contentId.replace('content', 'title')).textContent;
     const content = document.getElementById(contentId);
     navigator.clipboard.writeText(content.value)
         .then(() => {
-            alert('Nội dung đã được sao chép!');
+            toastr.success('Nội dung ghi chú ' + title + ' đã được sao chép!');
         })
         .catch(err => {
             console.error('Không thể sao chép:', err);
+            toastr.error('Không thể sao chép nội dung.');
         });
 }
+
 
 // Lưu ghi chú xuống localStorage (chỉ lưu số thứ tự)
 function saveNotesToLocalStorage() {
@@ -126,13 +129,13 @@ function loadNotesFromFile(event) {
                     saveNotesToLocalStorage();
                 }
             } catch (e) {
-                alert('Không thể tải ghi chú từ file JSON!');
+                toastr.error('Không thể tải ghi chú từ file JSON!');
             }
         };
 
         reader.readAsText(file);
     } else {
-        alert('Vui lòng chọn file JSON hợp lệ!');
+        toastr.error('Vui lòng chọn một file JSON!');
     }
 }
 
@@ -183,13 +186,18 @@ function addNewNote() {
     container.appendChild(newNote);
     saveNotesToLocalStorage();  // Lưu lại khi thêm ghi chú mới
     loadNotesFromLocalStorage();  // Tải lại ghi chú từ localStorage
+
+    toastr.success('Ghi chú mới đã được tạo!');
+
 }
 
 // Xoá ghi chú
 function deleteNote(noteId) {
     const note = document.getElementById(noteId);
     if (note) {
+        title = note.querySelector('.title').textContent;
         note.remove();
+        toastr.error('Ghi chú ' + title + ' đã bị xoá!');
     }
     saveNotesToLocalStorage();  // Lưu lại sau khi xóa ghi chú
 }
@@ -203,4 +211,8 @@ function editNote(noteId) {
     titleField.contentEditable = true; // Cho phép chỉnh sửa tiêu đề
     contentField.readOnly = false; // Cho phép chỉnh sửa nội dung
     contentField.style.backgroundColor = '#333'; // Thay đổi màu nền khi chỉnh sửa
+
+    titleField.focus(); // Focus vào tiêu đề
+
+    toastr.info('Chỉnh sửa ghi chú ' + titleField.textContent);
 }

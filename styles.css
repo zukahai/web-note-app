@@ -125,3 +125,13 @@ button:hover {
     pointer-events: none; /* Ngăn chặn sự kiện chuột trên biểu tượng */
 }
 
+/* toastr */
+
+#toast-container {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+}
+
+
