@@ -1,7 +1,12 @@
 const CACHE_NAME = 'offline-cache-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
+    '/',
+    '/index.html',
+    '/assets/css/style.css',
+    '/assets/css/nav.css',
+    '/assets/js/script.js',
+    '/assets/js/app.js',
+    '/assets/ico/note.ico',
 ];
 
 self.addEventListener('install', (event) => {
