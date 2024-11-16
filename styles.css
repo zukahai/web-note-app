@@ -95,3 +95,33 @@ button {
 button:hover {
     background-color: #218838;
 }
+
+/* Nút thêm ghi chú */
+.add-note-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-note-btn:hover {
+    background-color: #218838;
+}
+
+/* Thay đổi màu khi rê chuột qua biểu tượng */
+.add-note-btn i {
+    pointer-events: none; /* Ngăn chặn sự kiện chuột trên biểu tượng */
+}
+
