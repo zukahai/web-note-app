@@ -51,6 +51,7 @@ body {
     resize: none;
     background-color: #1e1e1e;
     color: #fff;
+    font-size: 15px;
 }
 
 .note-footer {
