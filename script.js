@@ -68,14 +68,14 @@ function loadNotesFromLocalStorage() {
             noteElement.innerHTML = `
                 <div class="note-header">
                     <span class="title" id="title-${index + 1}" contenteditable="false">${note.title}</span>
-                    <i class="fas fa-copy" onclick="copyContent('content-${index + 1}')"></i>
-                    <i class="fas fa-trash-alt" onclick="deleteNote('note-${index + 1}')"></i>
                     <i class="fas fa-edit" onclick="editNote('note-${index + 1}')"></i>
+                    <i class="fas fa-copy" onclick="copyContent('content-${index + 1}')"></i>
                 </div>
                 <textarea class="content" id="content-${index + 1}" readonly>${note.content}</textarea>
                 <div class="note-footer">
                     <i class="fas fa-arrow-up" onclick="moveUp('note-${index + 1}')"></i>
                     <i class="fas fa-arrow-down" onclick="moveDown('note-${index + 1}')"></i>
+                    <i class="fas fa-trash-alt delete-icon" onclick="deleteNote('note-${index + 1}')"></i>
                 </div>
             `;
             container.appendChild(noteElement);
@@ -114,13 +114,13 @@ function loadNotesFromFile(event) {
                             <div class="note-header">
                                 <span class="title">${note.title}</span>
                                 <i class="fas fa-copy" onclick="copyContent('content-${index + 1}')"></i>
-                                <i class="fas fa-trash-alt" onclick="deleteNote('note-${index + 1}')"></i>
                                 <i class="fas fa-edit" onclick="editNote('note-${index + 1}')"></i>
                             </div>
                             <textarea class="content" id="content-${index + 1}" readonly>${note.content}</textarea>
                             <div class="note-footer">
                                 <i class="fas fa-arrow-up" onclick="moveUp('note-${index + 1}')"></i>
                                 <i class="fas fa-arrow-down" onclick="moveDown('note-${index + 1}')"></i>
+                                <i class="fas fa-trash-alt delete-icon" onclick="deleteNote('note-${index + 1}')"></i>
                             </div>
                         `;
                         container.appendChild(noteElement);
@@ -173,13 +173,13 @@ function addNewNote() {
         <div class="note-header">
             <input type="text" class="title" placeholder="Tiêu đề ghi chú">
             <i class="fas fa-copy" onclick="copyContent('content-${noteCount + 1}')"></i>
-            <i class="fas fa-trash-alt" onclick="deleteNote('${newNoteId}')"></i>
             <i class="fas fa-edit" onclick="editNote('${newNoteId}')"></i>
         </div>
         <textarea class="content" id="content-${noteCount + 1}" placeholder="Nội dung ghi chú"></textarea>
         <div class="note-footer">
             <i class="fas fa-arrow-up" onclick="moveUp('${newNoteId}')"></i>
             <i class="fas fa-arrow-down" onclick="moveDown('${newNoteId}')"></i>
+            <i class="fas fa-trash-alt delete-icon" onclick="deleteNote('${newNoteId}')"></i>
         </div>
     `;
 
@@ -194,8 +194,19 @@ function addNewNote() {
 // Xoá ghi chú
 function deleteNote(noteId) {
     const note = document.getElementById(noteId);
+    title = note.querySelector('.title').textContent;
+    let text = Math.floor((Math.random() * 1000000)) % 90 + 10;
+    text = text.toString();
+
+    // cofirm xoá ghi chú bằng cách nhập "delete"
+    const confirmDelete = prompt('Nhập \'' + text + '\' để xác nhận xoá ghi chú ' + title);
+    if (confirmDelete != text) {
+        toastr.error('Xác nhận xoá không hợp lệ!');
+        return;
+    }
+    
     if (note) {
-        title = note.querySelector('.title').textContent;
+        
         note.remove();
         toastr.error('Ghi chú ' + title + ' đã bị xoá!');
     }
