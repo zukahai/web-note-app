@@ -127,6 +127,7 @@ function loadNotesFromFile(event) {
                     });
 
                     saveNotesToLocalStorage();
+                    loadNotesFromLocalStorage();  // Tải lại ghi chú từ localStorage
                 }
             } catch (e) {
                 toastr.error('Không thể tải ghi chú từ file JSON!');
@@ -137,6 +138,7 @@ function loadNotesFromFile(event) {
     } else {
         toastr.error('Vui lòng chọn một file JSON!');
     }
+    loadNotesFromLocalStorage();  // Tải lại ghi chú từ localStorage
 }
 
 // Lưu ghi chú vào file JSON
