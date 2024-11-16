@@ -61,15 +61,18 @@ function loadNotesFromLocalStorage() {
         notes.forEach((note, index) => {
             const noteElement = document.createElement('div');
             noteElement.classList.add('note');
+            noteElement.id = `note-${index + 1}`;
             noteElement.innerHTML = `
                 <div class="note-header">
-                    <span class="title">${note.title}</span>
-                    <button class="copy-button" onclick="copyContent('content-${index + 1}')">Sao chép</button>
+                    <span class="title" id="title-${index + 1}" contenteditable="false">${note.title}</span>
+                    <i class="fas fa-copy" onclick="copyContent('content-${index + 1}')"></i>
+                    <i class="fas fa-trash-alt" onclick="deleteNote('note-${index + 1}')"></i>
+                    <i class="fas fa-edit" onclick="editNote('note-${index + 1}')"></i>
                 </div>
-                <textarea class="content" id="content-${index + 1}">${note.content}</textarea>
+                <textarea class="content" id="content-${index + 1}" readonly>${note.content}</textarea>
                 <div class="note-footer">
-                    <button class="move-button" onclick="moveUp('note-${index + 1}')">Lên</button>
-                    <button class="move-button" onclick="moveDown('note-${index + 1}')">Xuống</button>
+                    <i class="fas fa-arrow-up" onclick="moveUp('note-${index + 1}')"></i>
+                    <i class="fas fa-arrow-down" onclick="moveDown('note-${index + 1}')"></i>
                 </div>
             `;
             container.appendChild(noteElement);
@@ -107,35 +110,33 @@ function loadNotesFromFile(event) {
                         noteElement.innerHTML = `
                             <div class="note-header">
                                 <span class="title">${note.title}</span>
-                                <button class="copy-button" onclick="copyContent('content-${index + 1}')">Sao chép</button>
+                                <i class="fas fa-copy" onclick="copyContent('content-${index + 1}')"></i>
+                                <i class="fas fa-trash-alt" onclick="deleteNote('note-${index + 1}')"></i>
+                                <i class="fas fa-edit" onclick="editNote('note-${index + 1}')"></i>
                             </div>
-                            <textarea class="content" id="content-${index + 1}">${note.content}</textarea>
+                            <textarea class="content" id="content-${index + 1}" readonly>${note.content}</textarea>
                             <div class="note-footer">
-                                <button class="move-button" onclick="moveUp('note-${index + 1}')">Lên</button>
-                                <button class="move-button" onclick="moveDown('note-${index + 1}')">Xuống</button>
+                                <i class="fas fa-arrow-up" onclick="moveUp('note-${index + 1}')"></i>
+                                <i class="fas fa-arrow-down" onclick="moveDown('note-${index + 1}')"></i>
                             </div>
                         `;
                         container.appendChild(noteElement);
                     });
 
-                    // Cập nhật localStorage với dữ liệu từ file
-                    localStorage.setItem('notes', JSON.stringify(notes));
-                } else {
-                    alert('Dữ liệu không hợp lệ!');
+                    saveNotesToLocalStorage();
                 }
-            } catch (err) {
-                console.error('Lỗi khi tải file:', err);
-                alert('Không thể đọc tệp JSON!');
+            } catch (e) {
+                alert('Không thể tải ghi chú từ file JSON!');
             }
         };
 
         reader.readAsText(file);
     } else {
-        alert('Vui lòng chọn một tệp JSON hợp lệ!');
+        alert('Vui lòng chọn file JSON hợp lệ!');
     }
 }
 
-// Lưu ghi chú ra file JSON
+// Lưu ghi chú vào file JSON
 function saveNotesToFile() {
     const notes = [];
     const noteElements = document.querySelectorAll('.note');
@@ -143,14 +144,62 @@ function saveNotesToFile() {
     noteElements.forEach((note, index) => {
         const title = note.querySelector('.title').textContent;
         const content = note.querySelector('.content').value;
-        notes.push({ title, content, position: index + 1 }); // Chỉ lưu số thứ tự
+        notes.push({ title, content });
     });
 
-    const blob = new Blob([JSON.stringify(notes, null, 2)], { type: 'application/json' });
+    const jsonData = JSON.stringify(notes, null, 2);
+    const blob = new Blob([jsonData], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = 'notes.json';
     a.click();
     URL.revokeObjectURL(url);
+}
+
+// Thêm ghi chú mới
+function addNewNote() {
+    const container = document.querySelector('.note-container-scrollable');
+    const noteCount = container.querySelectorAll('.note').length;
+    const newNoteId = `note-${noteCount + 1}`;
+
+    const newNote = document.createElement('div');
+    newNote.classList.add('note');
+    newNote.id = newNoteId;
+    newNote.innerHTML = `
+        <div class="note-header">
+            <input type="text" class="title" placeholder="Tiêu đề ghi chú">
+            <i class="fas fa-copy" onclick="copyContent('content-${noteCount + 1}')"></i>
+            <i class="fas fa-trash-alt" onclick="deleteNote('${newNoteId}')"></i>
+            <i class="fas fa-edit" onclick="editNote('${newNoteId}')"></i>
+        </div>
+        <textarea class="content" id="content-${noteCount + 1}" placeholder="Nội dung ghi chú"></textarea>
+        <div class="note-footer">
+            <i class="fas fa-arrow-up" onclick="moveUp('${newNoteId}')"></i>
+            <i class="fas fa-arrow-down" onclick="moveDown('${newNoteId}')"></i>
+        </div>
+    `;
+
+    container.appendChild(newNote);
+    saveNotesToLocalStorage();  // Lưu lại khi thêm ghi chú mới
+}
+
+// Xoá ghi chú
+function deleteNote(noteId) {
+    const note = document.getElementById(noteId);
+    if (note) {
+        note.remove();
+    }
+    saveNotesToLocalStorage();  // Lưu lại sau khi xóa ghi chú
+}
+
+// Chỉnh sửa ghi chú
+function editNote(noteId) {
+    const note = document.getElementById(noteId);
+    const titleField = note.querySelector('.title');
+    const contentField = note.querySelector('.content');
+
+    titleField.contentEditable = true; // Cho phép chỉnh sửa tiêu đề
+    contentField.readOnly = false; // Cho phép chỉnh sửa nội dung
+    contentField.style.backgroundColor = '#333'; // Thay đổi màu nền khi chỉnh sửa
 }
