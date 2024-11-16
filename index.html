@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Note App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="note-container-scrollable">
+        <div class="note" id="note1">
+            <div class="note-header">
+                <span class="title">Ghi chú 1</span>
+                <button class="copy-button" onclick="copyContent('content1')">Sao chép</button>
+            </div>
+            <textarea class="content" id="content1">Nội dung ghi chú 1</textarea>
+            <div class="note-footer">
+                <button class="move-button" onclick="moveUp('note1')">Lên</button>
+                <button class="move-button" onclick="moveDown('note1')">Xuống</button>
+            </div>
+        </div>
+        <div class="note" id="note2">
+            <div class="note-header">
+                <span class="title">Ghi chú 2</span>
+                <button class="copy-button" onclick="copyContent('content2')">Sao chép</button>
+            </div>
+            <textarea class="content" id="content2">Nội dung ghi chú 2</textarea>
+            <div class="note-footer">
+                <button class="move-button" onclick="moveUp('note2')">Lên</button>
+                <button class="move-button" onclick="moveDown('note2')">Xuống</button>
+            </div>
+        </div>
+        <div class="note" id="note3">
+            <div class="note-header">
+                <span class="title">Ghi chú 3</span>
+                <button class="copy-button" onclick="copyContent('content3')">Sao chép</button>
+            </div>
+            <textarea class="content" id="content3">Nội dung ghi chú 3</textarea>
+            <div class="note-footer">
+                <button class="move-button" onclick="moveUp('note3')">Lên</button>
+                <button class="move-button" onclick="moveDown('note3')">Xuống</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
