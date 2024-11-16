@@ -33,7 +33,6 @@ self.addEventListener('fetch', (event) => {
         })
     );
 });
-});
 
 // Dọn dẹp cache cũ khi cần thiết
 self.addEventListener('activate', (event) => {
