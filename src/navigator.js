@@ -6,7 +6,7 @@ function updateNetworkStatus() {
             toastr.success('Kết nối mạng đã được khôi phục');
         }
     } else {
-        toastr.warning('Vẫn có thể sử dụng ứng dụng');
+        toastr.warning('Vẫn có thể sử dụng ứng dụng bình thường');
         toastr.warning('Bạn đang không có kết nối mạng');
         notation = true;
     }
