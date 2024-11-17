@@ -6,6 +6,7 @@ const urlsToCache = [
     '/assets/css/nav.css',     // CSS phụ
     '/src/script.js',          // Script chính
     '/src/app.js',             // App logic
+    '/src/navigator.js',             // App logic
     '/assets/ico/note.ico'     // Icon
 ];
 
