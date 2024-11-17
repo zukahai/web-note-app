@@ -45,6 +45,10 @@ function saveNotesToLocalStorage() {
         notes.push({ title, content, position: index + 1 }); // Chỉ lưu số thứ tự
     });
 
+    if (notes.length >= 1 && notes[0].title == "") {
+        notes[0].title = "Ghi chú mới";
+    }
+
     // Lưu vào localStorage
     localStorage.setItem('notes', JSON.stringify(notes));
 }
@@ -187,8 +191,8 @@ function addNewNote() {
             <i class="fas fa-trash-alt delete-icon" onclick="deleteNote('${newNoteId}')"></i>
         </div>
     `;
-
-    container.appendChild(newNote);
+    // Thêm vào đàu container
+    container.insertBefore(newNote, container.firstChild);
     saveNotesToLocalStorage();  // Lưu lại khi thêm ghi chú mới
     loadNotesFromLocalStorage();  // Tải lại ghi chú từ localStorage
 
