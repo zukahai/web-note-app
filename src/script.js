@@ -189,7 +189,7 @@ function addNewNote() {
     // Lướt nhẹ lên đầu trang trong 200ms
     setTimeout(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 200);
+    }, 100);
 
 }
 
