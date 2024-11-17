@@ -46,7 +46,7 @@ function saveNotesToLocalStorage() {
     });
 
     if (notes.length >= 1 && notes[0].title == "") {
-        notes[0].title = "Ghi chú mới";
+        notes[0].title = "Ghi chú lúc " + create_time_string();
     }
 
     // Lưu vào localStorage
@@ -54,7 +54,7 @@ function saveNotesToLocalStorage() {
 }
 
 // Tải ghi chú từ localStorage
-function loadNotesFromLocalStorage() {
+function loadNotesFromLocalStorage(editFirstNote = false) {
     const notesJSON = localStorage.getItem('notes');
 
     if (notesJSON) {
@@ -85,8 +85,12 @@ function loadNotesFromLocalStorage() {
                 </div>
             `;
             container.appendChild(noteElement);
+            
         });
+        if (editFirstNote)
+            editNote('note-1', false); // Chỉnh sửa ghi chú đầu tiên
     }
+    
 }
 
 // Khi trang được tải lại, ưu tiên tải ghi chú từ localStorage
@@ -128,6 +132,17 @@ function loadNotesFromFile(event) {
     loadNotesFromLocalStorage();  // Tải lại ghi chú từ localStorage
 }
 
+function create_time_string() {
+    const day = new Date().getDate() < 10 ? '0' + new Date().getDate() : new Date().getDate();
+    const year = new Date().getFullYear() < 10 ? '0' + new Date().getFullYear() : new Date().getFullYear();
+    const month = new Date().getMonth() < 10 ? '0' + (new Date().getMonth() + 1) : new Date().getMonth() + 1;
+    const hour = new Date().getHours() < 10 ? '0' + new Date().getHours() : new Date().getHours();
+    const minute = new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes();
+    const second = new Date().getSeconds() < 10 ? '0' + new Date().getSeconds() : new Date().getSeconds();
+    const name_time = `${year}-${month}-${day}_${hour}-${minute}-${second}`;
+    return name_time;
+}
+
 // Lưu ghi chú vào file JSON
 function saveNotesToFile() {
     const notes = [];
@@ -144,14 +159,7 @@ function saveNotesToFile() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    const day = new Date().getDate() < 10 ? '0' + new Date().getDate() : new Date().getDate();
-    const year = new Date().getFullYear() < 10 ? '0' + new Date().getFullYear() : new Date().getFullYear();
-    const month = new Date().getMonth() < 10 ? '0' + (new Date().getMonth() + 1) : new Date().getMonth() + 1;
-    const hour = new Date().getHours() < 10 ? '0' + new Date().getHours() : new Date().getHours();
-    const minute = new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes();
-    const second = new Date().getSeconds() < 10 ? '0' + new Date().getSeconds() : new Date().getSeconds();
-    const name_time = `${year}-${month}-${day}_${hour}-${minute}-${second}`;
-
+    name_time = create_time_string();
     a.download = `HaiZukaNote_${name_time}.json`;
     a.click();
     URL.revokeObjectURL(url);
@@ -182,9 +190,9 @@ function addNewNote() {
     // Thêm vào đàu container
     container.insertBefore(newNote, container.firstChild);
     saveNotesToLocalStorage();  // Lưu lại khi thêm ghi chú mới
-    loadNotesFromLocalStorage();  // Tải lại ghi chú từ localStorage
-
+    loadNotesFromLocalStorage(true);  // Tải lại ghi chú từ localStorage
     toastr.success('Ghi chú mới đã được tạo!');
+
 
     // Lướt nhẹ lên đầu trang trong 200ms
     setTimeout(() => {
@@ -216,7 +224,7 @@ function deleteNote(noteId) {
 }
 
 // Chỉnh sửa ghi chú
-function editNote(noteId) {
+function editNote(noteId, notification = true) {
     const note = document.getElementById(noteId);
     const titleField = note.querySelector('.title');
     const contentField = note.querySelector('.content');
@@ -225,7 +233,8 @@ function editNote(noteId) {
     contentField.readOnly = false; // Cho phép chỉnh sửa nội dung
     contentField.style.backgroundColor = '#333'; // Thay đổi màu nền khi chỉnh sửa
 
-    titleField.focus(); // Focus vào tiêu đề
+    contentField.focus(); // Focus vào nội dung
 
-    toastr.info('Chỉnh sửa ghi chú ' + titleField.textContent);
+    if (notification)
+        toastr.info('Chỉnh sửa ghi chú ' + titleField.textContent);
 }
