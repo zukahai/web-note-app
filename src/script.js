@@ -72,16 +72,16 @@ function loadNotesFromLocalStorage() {
             noteElement.innerHTML = `
                 <div class="note-header">
                     <span class="title" id="title-${index + 1}" contenteditable="false">${note.title}</span>
-                    <i class="fas fa-edit" onclick="editNote('note-${index + 1}')"></i>
-                    <i class="fas fa-copy" onclick="copyContent('content-${index + 1}')"></i>
+                    <i class="fas fa-edit" title="Chỉnh sửa nội dung ${note.title}" onclick="editNote('note-${index + 1}')"></i>
+                    <i class="fas fa-copy"  title="Sao chép nội dung ${note.title}" onclick="copyContent('content-${index + 1}')"></i>
                 </div>
                 <textarea class="content" id="content-${index + 1}" readonly>${note.content}</textarea>
                 <div class="note-footer">
                     <div class = "up-down">
-                        <i class="fas fa-arrow-up" onclick="moveUp('note-${index + 1}')"></i>
-                        <i class="fas fa-arrow-down" onclick="moveDown('note-${index + 1}')"></i>
+                        <i class="fas fa-arrow-up" title="Di chuyển lên" onclick="moveUp('note-${index + 1}')"></i>
+                        <i class="fas fa-arrow-down" title="Di chuyển xuống" onclick="moveDown('note-${index + 1}')"></i>
                     </div>
-                    <i class="fas fa-trash-alt delete-icon" onclick="deleteNote('note-${index + 1}')"></i>
+                    <i class="fas fa-trash-alt delete-icon" title="Xoá ghi chú ${note.title}" onclick="deleteNote('note-${index + 1}')"></i>
                 </div>
             `;
             container.appendChild(noteElement);
@@ -102,6 +102,7 @@ document.querySelector('.note-container-scrollable').addEventListener('input', f
 // Tải ghi chú từ file JSON và cập nhật localStorage
 function loadNotesFromFile(event) {
     const file = event.target.files[0];
+    const file_name = file.name;
 
     if (file && file.type === 'application/json') {
         const reader = new FileReader();
@@ -110,33 +111,13 @@ function loadNotesFromFile(event) {
                 const notes = JSON.parse(e.target.result);
 
                 if (Array.isArray(notes)) {
-                    const container = document.querySelector('.note-container-scrollable');
-                    container.innerHTML = '';  // Xóa các ghi chú hiện tại
+                    localStorage.setItem('notes', JSON.stringify(notes));
 
-                    notes.forEach((note, index) => {
-                        const noteElement = document.createElement('div');
-                        noteElement.classList.add('note');
-                        noteElement.innerHTML = `
-                            <div class="note-header">
-                                <span class="title">${note.title}</span>
-                                <i class="fas fa-copy" onclick="copyContent('content-${index + 1}')"></i>
-                                <i class="fas fa-edit" onclick="editNote('note-${index + 1}')"></i>
-                            </div>
-                            <textarea class="content" id="content-${index + 1}" readonly>${note.content}</textarea>
-                            <div class="note-footer">
-                                <i class="fas fa-arrow-up" onclick="moveUp('note-${index + 1}')"></i>
-                                <i class="fas fa-arrow-down" onclick="moveDown('note-${index + 1}')"></i>
-                                <i class="fas fa-trash-alt delete-icon" onclick="deleteNote('note-${index + 1}')"></i>
-                            </div>
-                        `;
-                        container.appendChild(noteElement);
-                    });
-
-                    saveNotesToLocalStorage();
                     loadNotesFromLocalStorage();  // Tải lại ghi chú từ localStorage
+                    toastr.success('Ghi chú đã được tải từ file ' + file_name);
                 }
             } catch (e) {
-                toastr.error('Không thể tải ghi chú từ file JSON!');
+                toastr.error('Không thể tải ghi chú từ file ' + file_name);
             }
         };
 
