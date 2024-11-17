@@ -2,11 +2,12 @@ function updateNetworkStatus() {
     const offline_message = document.querySelector('.offline-message');
     if (navigator.onLine) {
         offline_message.style.display = 'none';
-        console.log("Bạn đang trực tuyến");
+        toastr.success('Bạn đang trực tuyến');
         
     } else {
         offline_message.style.display = 'block';
-        console.log("Bạn đang ngoại tuyến");
+        toastr.warning('Bạn đang ngoại tuyến');
+        tpastr.warning('Vẫn có thể sử dụng ứng dụng');
     }
 }
 

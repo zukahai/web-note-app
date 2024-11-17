@@ -326,10 +326,3 @@ textarea:focus {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     z-index: 100;
 }
-
-.offline-message{
-    color: #f8ef37;
-    font-size: 17px;
-    font-weight: bold;
-}
-
