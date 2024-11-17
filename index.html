@@ -37,17 +37,17 @@
         </nav>
 
         <button class="add-note-btn" onclick="addNewNote()">
-            <i class="fas fa-plus"></i>
+            <i class="fas fa-plus" title="Thêm ghi chú mới"></i>
         </button>
         <!-- Nút Chọn File -->
         <input type="file" id="file-input" onchange="loadNotesFromFile(event)"
             class="file-input" />
         <button onclick="document.getElementById('file-input').click()"
             class="file-btn">
-            <i class="fas fa-upload"></i>
+            <i class="fas fa-upload" title="Tải dữ liệu từ file"></i>
         </button>
         <button onclick="saveNotesToFile()" class="file-btn-upload">
-            <i class="fas fa-save"></i>
+            <i class="fas fa-save" title="Lưu dữ liệu hiện tại thành file"></i>
         </button>
 
         <div class="note-container-scrollable">

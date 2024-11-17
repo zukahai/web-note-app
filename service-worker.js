@@ -1,4 +1,4 @@
-const CACHE_NAME = 'web-note-app-cache-v5.1';
+const CACHE_NAME = 'web-note-app-cache-v5.2';
 const urlsToCache = [
     '/',                       // Trang chính
     '/index.html',             // Tệp HTML
