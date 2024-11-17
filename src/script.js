@@ -153,7 +153,7 @@ function saveNotesToFile() {
     const second = new Date().getSeconds();
     const name_time = `${year}-${month}-${day}_${hour}-${minute}-${second}`;
 
-    a.download = `notes_${name_time}.json`;
+    a.download = `HaiZukaNote_${name_time}.json`;
     a.click();
     URL.revokeObjectURL(url);
 }
