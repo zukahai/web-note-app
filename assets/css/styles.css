@@ -19,6 +19,27 @@ body {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.6);
 }
 
+textarea::-webkit-scrollbar {
+    width: 6px; /* Độ rộng của scrollbar */
+    height: 10px; /* Chiều cao của scrollbar ngang (nếu có) */
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background-color: #a7e9fd; /* Màu của thanh cuộn */
+    border-radius: 5px; /* Bo góc thanh cuộn */
+    border: 2px solid #1E1E1E; /* Tạo viền xung quanh thanh cuộn */
+}
+
+textarea::-webkit-scrollbar-track {
+    background-color: #282828; /* Màu nền của scrollbar */
+    border-radius: 5px; /* Bo góc track */
+}
+
+/* Tùy chọn màu khi hover vào thanh cuộn */
+textarea::-webkit-scrollbar-thumb:hover {
+    background-color: #76C796; /* Màu khi hover */
+}
+
 .note {
     border: 1px solid #444;
     border-radius: 5px;
