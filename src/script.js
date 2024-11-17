@@ -144,7 +144,15 @@ function saveNotesToFile() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    const name_time = new Date().toLocaleString().replace(/:/g, '-').replace(/ /g, '_');
+    const time = new Date().toLocaleTimeString();
+    const day = new Date().getDate();
+    const year = new Date().getFullYear();
+    const month = new Date().getMonth();
+    const hour = new Date().getHours();
+    const minute = new Date().getMinutes();
+    const second = new Date().getSeconds();
+    const name_time = `${year}-${month}-${day}_${hour}-${minute}-${second}`;
+
     a.download = `notes_${name_time}.json`;
     a.click();
     URL.revokeObjectURL(url);
