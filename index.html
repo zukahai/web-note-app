@@ -12,11 +12,15 @@
      <!-- Thêm Favicon -->
     <link rel="icon" href="./assets/ico/note.ico" type="image/x-icon">
     <!-- Thêm Font Awesome để sử dụng icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <nav class="navbar">
         <span class="home" >HaiZuka Note</span>
+        <!-- 1 thẻ span "Không có kết nối mạng" sẽ được thêm vào đây, mặc định ẩn đi -->
+    <span class="offline-message">Không có kết nối mạng, vẫn có thể sử dụng</span>
+
         <div class="nav-buttons">
             <button>
                 <i class="fas fa-search"></i>
@@ -24,12 +28,11 @@
             <button>
                 <i class="fas fa-bell"></i>
             </button>
-            <!-- icon wifi -->
-            <button>
-                <i class="fas fa-wifi"></i>
-            </button>
+            
         </div>
     </nav>
+
+    
     
     <button class="add-note-btn" onclick="addNewNote()">
         <i class="fas fa-plus"></i>
@@ -52,6 +55,7 @@
 
     <script src="./src/script.js"></script>
     <script src="./src/app.js"></script>
+    <script src="./src/navigator.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 

@@ -327,3 +327,9 @@ textarea:focus {
     z-index: 100;
 }
 
+.offline-message{
+    color: #f8ef37;
+    font-size: 17px;
+    font-weight: bold;
+}
+
