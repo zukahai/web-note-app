@@ -144,13 +144,12 @@ function saveNotesToFile() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    const time = new Date().toLocaleTimeString();
-    const day = new Date().getDate();
-    const year = new Date().getFullYear();
-    const month = new Date().getMonth();
-    const hour = new Date().getHours();
-    const minute = new Date().getMinutes();
-    const second = new Date().getSeconds();
+    const day = new Date().getDate() < 10 ? '0' + new Date().getDate() : new Date().getDate();
+    const year = new Date().getFullYear() < 10 ? '0' + new Date().getFullYear() : new Date().getFullYear();
+    const month = new Date().getMonth() < 10 ? '0' + (new Date().getMonth() + 1) : new Date().getMonth() + 1;
+    const hour = new Date().getHours() < 10 ? '0' + new Date().getHours() : new Date().getHours();
+    const minute = new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes();
+    const second = new Date().getSeconds() < 10 ? '0' + new Date().getSeconds() : new Date().getSeconds();
     const name_time = `${year}-${month}-${day}_${hour}-${minute}-${second}`;
 
     a.download = `HaiZukaNote_${name_time}.json`;
