@@ -186,6 +186,11 @@ function addNewNote() {
 
     toastr.success('Ghi chú mới đã được tạo!');
 
+    // Lướt nhẹ lên đầu trang trong 200ms
+    setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 200);
+
 }
 
 // Xoá ghi chú
