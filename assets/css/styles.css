@@ -326,3 +326,12 @@ textarea:focus {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
     z-index: 100;
 }
+
+.toast {
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 10px 0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.4);
+    font-size: 15px;
+}

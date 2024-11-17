@@ -1,13 +1,14 @@
+let notation = false;
+
 function updateNetworkStatus() {
-    const offline_message = document.querySelector('.offline-message');
     if (navigator.onLine) {
-        offline_message.style.display = 'none';
-        toastr.success('Bạn đang trực tuyến');
-        
+        if (notation) {
+            toastr.success('Kết nối mạng đã được khôi phục');
+        }
     } else {
-        offline_message.style.display = 'block';
-        toastr.warning('Bạn đang ngoại tuyến');
-        tpastr.warning('Vẫn có thể sử dụng ứng dụng');
+        toastr.warning('Vẫn có thể sử dụng ứng dụng');
+        toastr.warning('Bạn đang không có kết nối mạng');
+        notation = true;
     }
 }
 

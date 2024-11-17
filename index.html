@@ -1,61 +1,67 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HaiZuka Note</title>
-    <link rel="stylesheet" href="./assets/css/styles.css">
-    <link rel="stylesheet" href="./assets/css/nav.css">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>HaiZuka Note</title>
+        <link rel="stylesheet" href="./assets/css/styles.css">
+        <link rel="stylesheet" href="./assets/css/nav.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-     <!-- Thêm Favicon -->
-    <link rel="icon" href="./assets/ico/note.ico" type="image/x-icon">
-    <!-- Thêm Font Awesome để sử dụng icon -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <nav class="navbar">
-        <span class="home" >HaiZuka Note</span>
+        <!-- Thêm Favicon -->
+        <link rel="icon" href="./assets/ico/note.ico" type="image/x-icon">
+        <!-- Thêm Font Awesome để sử dụng icon -->
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+            rel="stylesheet">
+    </head>
+    <body>
+        <nav class="navbar">
+            <span class="home">HaiZuka Note</span>
 
-        <div class="nav-buttons">
-            <button>
-                <i class="fas fa-search"></i>
-            </button>
-            <button>
-                <i class="fas fa-bell"></i>
-            </button>
-            
+            <div class="nav-buttons">
+                <button>
+                    <i class="fas fa-search"></i>
+                </button>
+                <button>
+                    <i class="fas fa-bell"></i>
+                </button>
+
+            </div>
+        </nav>
+
+        <button class="add-note-btn" onclick="addNewNote()">
+            <i class="fas fa-plus"></i>
+        </button>
+        <!-- Nút Chọn File -->
+        <input type="file" id="file-input" onchange="loadNotesFromFile(event)"
+            class="file-input" />
+        <button onclick="document.getElementById('file-input').click()"
+            class="file-btn">
+            <i class="fas fa-upload"></i>
+        </button>
+        <button onclick="saveNotesToFile()" class="file-btn-upload">
+            <i class="fas fa-save"></i>
+        </button>
+
+        <div class="note-container-scrollable">
+            <!-- Các ghi chú sẽ được thêm vào đây -->
         </div>
-    </nav>
 
-    
-    
-    <button class="add-note-btn" onclick="addNewNote()">
-        <i class="fas fa-plus"></i>
-    </button>
-    <!-- Nút Chọn File -->
-    <input type="file" id="file-input" onchange="loadNotesFromFile(event)" class="file-input" />
-    <button onclick="document.getElementById('file-input').click()" class="file-btn">
-        <i class="fas fa-upload"></i>
-    </button>
-    <button onclick="saveNotesToFile()" class="file-btn-upload">
-        <i class="fas fa-save"></i>
-    </button>
-    
-    <div class="note-container-scrollable">
-        <!-- Các ghi chú sẽ được thêm vào đây -->
-    </div>
-
-    <!-- <input type="file" id="file-input" onchange="loadNotesFromFile(event)" />
+        <!-- <input type="file" id="file-input" onchange="loadNotesFromFile(event)" />
     <button onclick="saveNotesToFile()">Lưu Ghi Chú ra File</button> -->
 
-    <script src="./src/script.js"></script>
-    <script src="./src/app.js"></script>
-    <script src="./src/navigator.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-</body>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="./src/script.js"></script>
+        <script src="./src/app.js"></script>
+        <script src="./src/navigator.js"></script>
+    </body>
 </html>
