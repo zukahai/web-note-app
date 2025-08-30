@@ -1,22 +1,35 @@
 .nav-buttons button {
-    background-color: #4CAF50;
-    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     color: white;
-    padding: 8px 16px;
-    border-radius: 5px;
+    padding: 10px 14px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-left: 8px;
+    font-size: 16px;
 }
 
 .nav-buttons {
-    margin-right: 30px;
+    margin-right: 0;
+    display: flex;
+    align-items: center;
 }
 
 .nav-buttons button:hover {
-    background-color: #2E7D32;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.25);
 }
 
 .home {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
 }
