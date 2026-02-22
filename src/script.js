@@ -19,18 +19,90 @@ function moveDown(noteId) {
     saveNotesToLocalStorage();  // Lưu lại sau khi di chuyển
 }
 
-// Sao chép nội dung ghi chú
+// Sao chép nội dung ghi chú (bao gồm cả ảnh)
 function copyContent(contentId) {
     const title = document.getElementById(contentId.replace('content', 'title')).textContent;
     const content = document.getElementById(contentId);
-    navigator.clipboard.writeText(content.value)
-        .then(() => {
-            toastr.success('Nội dung ghi chú ' + title + ' đã được sao chép!');
-        })
-        .catch(err => {
-            console.error('Không thể sao chép:', err);
-            toastr.error('Không thể sao chép nội dung.');
+    const noteId = contentId.replace('content-', 'note-');
+    const note = document.getElementById(noteId);
+    const images = note.querySelectorAll('.image-preview img');
+
+    // Tạo nội dung HTML để copy
+    let htmlContent = `<div><strong>${title}</strong></div><div>${content.value.replace(/\n/g, '<br>')}</div>`;
+
+    // Thêm ảnh vào nội dung HTML
+    if (images.length > 0) {
+        htmlContent += '<div>';
+        images.forEach(img => {
+            htmlContent += `<img src="${img.src}" style="max-width: 300px; margin: 5px;">`;
         });
+        htmlContent += '</div>';
+    }
+
+    // Tạo plain text version (không có ảnh)
+    let plainText = `${title}\n${content.value}`;
+    if (images.length > 0) {
+        plainText += `\n\n[Ghi chú có ${images.length} ảnh]`;
+    }
+
+    const canWriteRich = !!(window.isSecureContext && navigator.clipboard && window.ClipboardItem);
+
+    const copyPlainTextLegacy = () => {
+        const temp = document.createElement('textarea');
+        temp.value = plainText;
+        temp.setAttribute('readonly', '');
+        temp.style.position = 'fixed';
+        temp.style.left = '-9999px';
+        document.body.appendChild(temp);
+        temp.select();
+        let ok = false;
+        try {
+            ok = document.execCommand('copy');
+        } catch (err) {
+            ok = false;
+        }
+        document.body.removeChild(temp);
+        return ok;
+    };
+
+    if (canWriteRich) {
+        const clipboardItem = new ClipboardItem({
+            'text/html': new Blob([htmlContent], { type: 'text/html' }),
+            'text/plain': new Blob([plainText], { type: 'text/plain' })
+        });
+
+        navigator.clipboard.write([clipboardItem])
+            .then(() => {
+                toastr.success('Nội dung ghi chú ' + title + ' (bao gồm ' + images.length + ' ảnh) đã được sao chép!');
+            })
+            .catch(() => {
+                navigator.clipboard.writeText(plainText)
+                    .then(() => {
+                        toastr.warning('Đã sao chép nội dung text (không bao gồm ảnh)');
+                    })
+                    .catch(() => {
+                        const ok = copyPlainTextLegacy();
+                        if (ok) {
+                            toastr.warning('Đã sao chép nội dung text (không bao gồm ảnh)');
+                        } else {
+                            toastr.error('Không thể sao chép nội dung.');
+                        }
+                    });
+            });
+    } else {
+        navigator.clipboard?.writeText(plainText)
+            .then(() => {
+                toastr.warning('Đã sao chép nội dung text (không bao gồm ảnh)');
+            })
+            .catch(() => {
+                const ok = copyPlainTextLegacy();
+                if (ok) {
+                    toastr.warning('Đã sao chép nội dung text (không bao gồm ảnh)');
+                } else {
+                    toastr.error('Không thể sao chép nội dung. Vui lòng chạy trên HTTPS hoặc localhost.');
+                }
+            });
+    }
 }
 
 
@@ -42,7 +114,12 @@ function saveNotesToLocalStorage() {
     noteElements.forEach((note, index) => {
         const title = note.querySelector('.title').textContent;
         const content = note.querySelector('.content').value;
-        notes.push({ title, content, position: index + 1 }); // Chỉ lưu số thứ tự
+        const images = [];
+        const imageElements = note.querySelectorAll('.image-preview img');
+        imageElements.forEach(img => {
+            images.push(img.src);
+        });
+        notes.push({ title, content, images, position: index + 1 }); // Lưu cả ảnh
     });
 
     if (notes.length >= 1 && notes[0].title == "") {
@@ -76,6 +153,13 @@ function loadNotesFromLocalStorage(editFirstNote = false) {
                     <i class="fas fa-copy"  title="Sao chép nội dung ${note.title}" onclick="copyContent('content-${index + 1}')"></i>
                 </div>
                 <textarea class="content" id="content-${index + 1}" readonly>${note.content}</textarea>
+                <div class="image-container">
+                    <input type="file" id="image-input-${index + 1}" accept="image/*" multiple style="display: none;" onchange="handleImageUpload(event, 'note-${index + 1}')">
+                    <button class="add-image-btn" onclick="document.getElementById('image-input-${index + 1}').click()">
+                        <i class="fas fa-image"></i> Thêm ảnh
+                    </button>
+                    <div class="image-preview" id="image-preview-${index + 1}"></div>
+                </div>
                 <div class="note-footer">
                     <div class = "up-down">
                         <i class="fas fa-arrow-up" title="Di chuyển lên" onclick="moveUp('note-${index + 1}')"></i>
@@ -86,6 +170,19 @@ function loadNotesFromLocalStorage(editFirstNote = false) {
             `;
             container.appendChild(noteElement);
             
+            // Tải ảnh nếu có
+            if (note.images && note.images.length > 0) {
+                const imagePreview = document.getElementById(`image-preview-${index + 1}`);
+                note.images.forEach(imageSrc => {
+                    const imgWrapper = document.createElement('div');
+                    imgWrapper.classList.add('image-wrapper');
+                    imgWrapper.innerHTML = `
+                        <img src="${imageSrc}" alt="Note image">
+                        <button class="delete-image-btn" onclick="deleteImage(this)"><i class="fas fa-times"></i></button>
+                    `;
+                    imagePreview.appendChild(imgWrapper);
+                });
+            }
         });
         if (editFirstNote)
             editNote('note-1', false); // Chỉnh sửa ghi chú đầu tiên
@@ -151,7 +248,12 @@ function saveNotesToFile() {
     noteElements.forEach((note, index) => {
         const title = note.querySelector('.title').textContent;
         const content = note.querySelector('.content').value;
-        notes.push({ title, content });
+        const images = [];
+        const imageElements = note.querySelectorAll('.image-preview img');
+        imageElements.forEach(img => {
+            images.push(img.src);
+        });
+        notes.push({ title, content, images });
     });
 
     const jsonData = JSON.stringify(notes, null, 2);
@@ -237,4 +339,38 @@ function editNote(noteId, notification = true) {
 
     if (notification)
         toastr.info('Chỉnh sửa ghi chú ' + titleField.textContent);
+}
+
+// Xử lý upload ảnh
+function handleImageUpload(event, noteId) {
+    const files = event.target.files;
+    const note = document.getElementById(noteId);
+    const noteIndex = noteId.split('-')[1];
+    const imagePreview = document.getElementById(`image-preview-${noteIndex}`);
+    
+    Array.from(files).forEach(file => {
+        if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgWrapper = document.createElement('div');
+                imgWrapper.classList.add('image-wrapper');
+                imgWrapper.innerHTML = `
+                    <img src="${e.target.result}" alt="Note image">
+                    <button class="delete-image-btn" onclick="deleteImage(this)"><i class="fas fa-times"></i></button>
+                `;
+                imagePreview.appendChild(imgWrapper);
+                saveNotesToLocalStorage();
+                toastr.success('Đã thêm ảnh vào ghi chú!');
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+}
+
+// Xóa ảnh
+function deleteImage(button) {
+    const imgWrapper = button.parentElement;
+    imgWrapper.remove();
+    saveNotesToLocalStorage();
+    toastr.info('Đã xóa ảnh!');
 }
