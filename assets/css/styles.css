@@ -414,3 +414,172 @@ textarea:focus {
 .delete-image-btn i {
     pointer-events: none;
 }
+
+/* Theme overrides */
+:root {
+    --bg-1: #070a12;
+    --bg-2: #0b1220;
+    --surface: rgba(12, 18, 30, 0.9);
+    --surface-2: rgba(16, 24, 40, 0.95);
+    --border: rgba(120, 255, 240, 0.18);
+    --text: #eef6ff;
+    --muted: #9fb0c9;
+    --accent: #6df8ff;
+    --accent-2: #9b7bff;
+    --success: #62ffb5;
+    --danger: #ff5fa2;
+    --shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+}
+
+body {
+    font-family: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: radial-gradient(1200px 600px at 8% -12%, rgba(109, 248, 255, 0.25), transparent 60%),
+        radial-gradient(900px 520px at 92% 4%, rgba(155, 123, 255, 0.22), transparent 55%),
+        radial-gradient(700px 520px at 50% 120%, rgba(98, 255, 181, 0.18), transparent 65%),
+        linear-gradient(160deg, var(--bg-1), var(--bg-2));
+    color: var(--text);
+    padding: 90px 16px 32px;
+    min-height: 100vh;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: linear-gradient(120deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 60%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.navbar {
+    height: 64px;
+    background: rgba(10, 14, 24, 0.86);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(12px);
+}
+
+.home {
+    font-family: "Fraunces", "Space Grotesk", serif;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+}
+
+.nav-buttons button {
+    background: linear-gradient(135deg, rgba(255, 179, 71, 0.9), rgba(255, 97, 97, 0.85));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 20px rgba(255, 117, 76, 0.2);
+}
+
+.nav-buttons button:hover {
+    background: linear-gradient(135deg, rgba(255, 179, 71, 1), rgba(255, 97, 97, 1));
+}
+
+.note-container-scrollable {
+    max-width: 980px;
+    height: auto;
+    min-height: 60vh;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(16px);
+}
+
+.note {
+    border: 1px solid rgba(120, 255, 240, 0.2);
+    background: var(--surface-2);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 18px rgba(109, 248, 255, 0.12);
+    border-radius: 16px;
+    padding: 16px;
+    animation: note-fade 420ms ease;
+}
+
+@keyframes note-fade {
+    from {
+        transform: translateY(10px);
+        opacity: 0.5;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.title {
+    color: var(--accent);
+    font-size: 18px;
+    text-shadow: 0 0 12px rgba(109, 248, 255, 0.35);
+}
+
+.content {
+    border: 1px solid rgba(120, 255, 240, 0.18);
+    background: rgba(10, 14, 22, 0.95);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.note-header i {
+    color: var(--muted);
+    transition: transform 0.2s, color 0.2s, text-shadow 0.2s;
+}
+
+.note-header i:hover {
+    color: var(--accent);
+    transform: translateY(-1px);
+    text-shadow: 0 0 12px rgba(109, 248, 255, 0.5);
+}
+
+.delete-icon {
+    color: var(--danger);
+}
+
+.add-note-btn {
+    background: linear-gradient(135deg, var(--success), #00f5d4);
+    box-shadow: 0 18px 36px rgba(0, 245, 212, 0.35);
+}
+
+.file-btn-upload {
+    background: linear-gradient(135deg, #6df8ff, #7aa6ff);
+    box-shadow: 0 14px 28px rgba(109, 248, 255, 0.35);
+}
+
+.file-btn {
+    background: linear-gradient(135deg, #9b7bff, #ff5fa2);
+    box-shadow: 0 14px 28px rgba(155, 123, 255, 0.35);
+}
+
+.add-image-btn {
+    background: linear-gradient(135deg, #7aa6ff, #6df8ff);
+    box-shadow: 0 8px 18px rgba(109, 248, 255, 0.35);
+}
+
+.image-container {
+    background: rgba(10, 12, 18, 0.85);
+    border: 1px solid rgba(120, 255, 240, 0.16);
+}
+
+.image-wrapper {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 84px 12px 24px;
+    }
+
+    .note-container-scrollable {
+        padding: 12px;
+    }
+
+    .note {
+        padding: 14px;
+    }
+
+    .add-note-btn,
+    .file-btn,
+    .file-btn-upload {
+        width: 54px;
+        height: 54px;
+    }
+}
