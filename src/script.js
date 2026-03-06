@@ -19,31 +19,13 @@ function moveDown(noteId) {
     saveNotesToLocalStorage();  // Lưu lại sau khi di chuyển
 }
 
-// Sao chép nội dung ghi chú (bao gồm cả ảnh)
+// Sao chép nội dung ghi chú (chỉ nội dung text, không bao gồm tên và ảnh)
 function copyContent(contentId) {
-    const title = document.getElementById(contentId.replace('content', 'title')).textContent;
     const content = document.getElementById(contentId);
-    const noteId = contentId.replace('content-', 'note-');
-    const note = document.getElementById(noteId);
-    const images = note.querySelectorAll('.image-preview img');
 
-    // Tạo nội dung HTML để copy
-    let htmlContent = `<div><strong>${title}</strong></div><div>${content.value.replace(/\n/g, '<br>')}</div>`;
-
-    // Thêm ảnh vào nội dung HTML
-    if (images.length > 0) {
-        htmlContent += '<div>';
-        images.forEach(img => {
-            htmlContent += `<img src="${img.src}" style="max-width: 300px; margin: 5px;">`;
-        });
-        htmlContent += '</div>';
-    }
-
-    // Tạo plain text version (không có ảnh)
-    let plainText = `${title}\n${content.value}`;
-    if (images.length > 0) {
-        plainText += `\n\n[Ghi chú có ${images.length} ảnh]`;
-    }
+    // Chỉ copy nội dung text, không có tên ghi chú và ảnh
+    let htmlContent = `<div>${content.value.replace(/\n/g, '<br>')}</div>`;
+    let plainText = content.value;
 
     const canWriteRich = !!(window.isSecureContext && navigator.clipboard && window.ClipboardItem);
 
@@ -73,17 +55,17 @@ function copyContent(contentId) {
 
         navigator.clipboard.write([clipboardItem])
             .then(() => {
-                toastr.success('Nội dung ghi chú ' + title + ' (bao gồm ' + images.length + ' ảnh) đã được sao chép!');
+                toastr.success('Nội dung ghi chú đã được sao chép!');
             })
             .catch(() => {
                 navigator.clipboard.writeText(plainText)
                     .then(() => {
-                        toastr.warning('Đã sao chép nội dung text (không bao gồm ảnh)');
+                        toastr.success('Nội dung ghi chú đã được sao chép!');
                     })
                     .catch(() => {
                         const ok = copyPlainTextLegacy();
                         if (ok) {
-                            toastr.warning('Đã sao chép nội dung text (không bao gồm ảnh)');
+                            toastr.success('Nội dung ghi chú đã được sao chép!');
                         } else {
                             toastr.error('Không thể sao chép nội dung.');
                         }
@@ -92,12 +74,12 @@ function copyContent(contentId) {
     } else {
         navigator.clipboard?.writeText(plainText)
             .then(() => {
-                toastr.warning('Đã sao chép nội dung text (không bao gồm ảnh)');
+                toastr.success('Nội dung ghi chú đã được sao chép!');
             })
             .catch(() => {
                 const ok = copyPlainTextLegacy();
                 if (ok) {
-                    toastr.warning('Đã sao chép nội dung text (không bao gồm ảnh)');
+                    toastr.success('Nội dung ghi chú đã được sao chép!');
                 } else {
                     toastr.error('Không thể sao chép nội dung. Vui lòng chạy trên HTTPS hoặc localhost.');
                 }
